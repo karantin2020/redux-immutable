@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "build": "babel src -o lib/index.js"
+    "build": "babel src -o lib/index.js --ignore **/*.test.js"
   },
   "jest": {
     "transform": {
