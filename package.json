@@ -1,0 +1,42 @@
+{
+  "name": "redux-immutable",
+  "version": "0.1.1",
+  "description": "Package for redux store and action implementation as proxy for immutablejs",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "build": "babel src -o lib/index.js"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.js?$": "babel-jest"
+    },
+    "testEnvironment": "node"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/karantin2020/redux-immutable.git"
+  },
+  "keywords": [
+    "redux",
+    "immutable"
+  ],
+  "author": "karantin2020",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/karantin2020/redux-immutable/issues"
+  },
+  "homepage": "https://github.com/karantin2020/redux-immutable#readme",
+  "dependencies": {
+    "immutable": "^3.8.2",
+    "redux": "^4.0.0",
+    "redux-actions": "^2.6.1",
+    "redux-promise": "^0.6.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-jest": "^23.4.2",
+    "babel-preset-env": "^1.7.0",
+    "jest": "^23.4.2"
+  }
+}
