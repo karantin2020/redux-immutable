@@ -6,6 +6,11 @@ var api_state = Immutable.Map({
   blog: Immutable.Map()
 });
 
+var messageBody = { content: 'testContentBody', name: 'testNameBody' };
+var service = {
+  get: () => messageBody
+};
+
 var store = flat_store(api_state);
 
 var blog_state = generateActions(['blog'], store.dispatch);
@@ -22,4 +27,10 @@ test('state setIn test', () => {
       .getIn(['blog'])
       .toJS()
   ).toEqual({ content: 'testContent', name: 'testName' });
+});
+
+test('state setIn test with function payload', () => {
+  blog_state.setIn(service.get())
+  var state = store.getState().getIn(['blog']);
+  expect(state).toEqual(messageBody);
 });
