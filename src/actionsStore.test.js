@@ -6,21 +6,19 @@ var api_state = Immutable.Map({
   blog: Immutable.Map()
 });
 
-var messageBody = { content: 'testContentBody', name: 'testNameBody' };
+var messageBody = Immutable.Map({ content: 'testContentBody', name: 'testNameBody' });
+var promiseBody = Immutable.Map({ content: 'testContentPromise', name: 'testNamePromise' });
 var service = {
-  get: () => messageBody
+  get: () => messageBody,
+  promise: () => Promise.resolve(promiseBody)
 };
 
 var store = flat_store(api_state);
 
-var blog_state = generateActions(['blog'], store.dispatch);
-
-// console.log(store.getState().toJS());
-// blog_state.setIn(Immutable.Map({ name: 'testName', content: 'testContent' }));
-// console.log(store.getState().toJS());
+var blog_actions = generateActions(['blog'], store.dispatch);
 
 test('state setIn test', () => {
-  blog_state.setIn(Immutable.Map({ name: 'testName', content: 'testContent' }));
+  blog_actions.setIn(Immutable.Map({ name: 'testName', content: 'testContent' }));
   expect(
     store
       .getState()
@@ -30,7 +28,13 @@ test('state setIn test', () => {
 });
 
 test('state setIn test with function payload', () => {
-  blog_state.setIn(service.get())
+  blog_actions.setIn(service.get())
   var state = store.getState().getIn(['blog']);
   expect(state).toEqual(messageBody);
+});
+
+test('state setIn test with promise payload', async () => {
+  blog_actions.setIn(service.promise());
+  var state = await store.getState().getIn(["blog"]);
+  expect(state).toEqual(promiseBody);
 });

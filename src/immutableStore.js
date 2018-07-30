@@ -1,7 +1,7 @@
 import Immutable from 'immutable';
 import { createStore, applyMiddleware } from 'redux';
 
-import promiseMiddleware from 'redux-promise';
+import thunk from 'redux-thunk'
 
 const flatReducer = (state = Immutable.Map({}), action) => {
   if (action && action.error) {
@@ -25,18 +25,18 @@ const flatReducer = (state = Immutable.Map({}), action) => {
   }
 };
 
-const logger = store => next => action => {
-  console.log(action.type);
-  console.log('dispatching', store.getState().toJS());
-  let result = next(action);
-  console.log('next state', store.getState().toJS());
-  console.log(action.type);
-  return result;
-};
+// const logger = store => next => action => {
+//   console.log(action.type);
+//   console.log('dispatching', store.getState());
+//   let result = next(action);
+//   console.log('next state', store.getState());
+//   console.log(action.type);
+//   return result;
+// };
 
 const createStoreWithMiddleware = applyMiddleware(
-  promiseMiddleware /*,
-	logger*/
+  thunk,
+	// logger
 )(createStore);
 
 const flat_store = function(api_state) {
